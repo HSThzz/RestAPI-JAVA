@@ -1,6 +1,7 @@
 package com.AuthorApi.AuthorApi.controllers;
 
 
+import com.AuthorApi.AuthorApi.controllers.dto.AuthorDTO;
 import com.AuthorApi.AuthorApi.models.AuthorModel;
 import com.AuthorApi.AuthorApi.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,9 @@ public class AuthorController {
     }
 
     @PostMapping()
-    public ResponseEntity<Object> postAuthor(@RequestBody AuthorModel author) throws Exception {
-        ResponseEntity<Object> status = authorService.postAuthor(author);
+    public ResponseEntity<Object> postAuthor(@RequestBody AuthorDTO author) throws Exception {
+
+        ResponseEntity<Object> status = authorService.postAuthor(author.setAuthor());
 
         return switch (status.getStatusCode()) {
             case HttpStatus.UNPROCESSABLE_ENTITY -> ResponseEntity.status(422).body("Erro de Validação");

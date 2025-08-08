@@ -1,6 +1,7 @@
 package com.AuthorApi.AuthorApi.services;
 
 
+import com.AuthorApi.AuthorApi.controllers.dto.AuthorDTO;
 import com.AuthorApi.AuthorApi.models.AuthorModel;
 import com.AuthorApi.AuthorApi.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,11 @@ public class AuthorService {
     }
 
     public ResponseEntity<Object> postAuthor(AuthorModel author) throws Exception{
+
         if (authorRepository.findByNome(author.getNome()).isPresent()) {
             throw new Exception("Registro duplicado");
         }
+
         authorRepository.save(author);
         return ResponseEntity.status(201).body("Autor criado com sucesso");
     }
