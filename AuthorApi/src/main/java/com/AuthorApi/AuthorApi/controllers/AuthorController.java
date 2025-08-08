@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,8 +35,11 @@ public class AuthorController {
         ResponseEntity<Object> status = authorService.deleteAuthor(id);
 
         return switch (status.getStatusCode()) {
+
             case HttpStatus.NO_CONTENT -> ResponseEntity.status(204).body("No content");
+
             case HttpStatus.BAD_REQUEST -> ResponseEntity.status(400).body("Erro de Validação");
+
             default -> status;
         };
     }
@@ -48,9 +50,13 @@ public class AuthorController {
         ResponseEntity<Object> status = authorService.putAuthor(id, author);
 
         return switch (status.getStatusCode()) {
+
             case HttpStatus.NO_CONTENT -> ResponseEntity.status(204).body("Erro de Validação");
+
             case HttpStatus.UNPROCESSABLE_ENTITY -> ResponseEntity.status(422).body("Erro de Validação");
+
             case HttpStatus.CONFLICT -> ResponseEntity.status(409).body("Registro duplicado");
+
             default -> status;
         };
     }
@@ -61,8 +67,11 @@ public class AuthorController {
         ResponseEntity<Object> status = authorService.postAuthor(author.setAuthor());
 
         return switch (status.getStatusCode()) {
+
             case HttpStatus.UNPROCESSABLE_ENTITY -> ResponseEntity.status(422).body("Erro de Validação");
+
             case HttpStatus.CONFLICT -> ResponseEntity.status(409).body("Registro duplicado");
+
             default -> status;
         };
 
