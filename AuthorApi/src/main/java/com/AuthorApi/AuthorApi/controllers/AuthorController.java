@@ -22,9 +22,9 @@ public class AuthorController {
     private AuthorService authorService;
 
     @GetMapping("{id}")
-    public ResponseEntity<Object> getAuthor(@PathVariable UUID id) throws Exception {
+    public ResponseEntity<AuthorDTO> getAuthor(@PathVariable UUID id) throws Exception {
 
-        Optional<AuthorModel> author = authorService.getAuthor(id);
+        AuthorDTO author = authorService.getAuthor(id);
 
         return ResponseEntity.status(200).body(author);
     }

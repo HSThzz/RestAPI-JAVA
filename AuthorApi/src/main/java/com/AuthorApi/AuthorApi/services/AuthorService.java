@@ -19,11 +19,16 @@ public class AuthorService {
     private AuthorRepository authorRepository1;
 
 
-    public Optional<AuthorModel> getAuthor(UUID id) throws Exception{
-        if(authorRepository.findById(id).isEmpty()){
-            throw new Exception("Autor nao existente");
-        }
-        return authorRepository.findById(id);
+    public AuthorDTO getAuthor(UUID id) throws Exception{
+
+        AuthorModel authorModel = authorRepository.findById(id)
+                .orElseThrow(() -> new Exception("Autor nao existente"));
+
+        return new AuthorDTO(
+                id,
+                authorModel.getNome(),
+                authorModel.getDataNascimento(),
+                authorModel.getNacionalidade());
     }
 
     public ResponseEntity<Object> deleteAuthor(UUID id) throws Exception{
