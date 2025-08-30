@@ -1,5 +1,6 @@
 package com.AuthorApi.AuthorApi.services;
 
+import com.AuthorApi.AuthorApi.controllers.dto.BookDTO;
 import com.AuthorApi.AuthorApi.models.AuthorModel;
 import com.AuthorApi.AuthorApi.models.BookModel;
 import com.AuthorApi.AuthorApi.repositories.AuthorRepository;
@@ -22,11 +23,17 @@ public class BookService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public Optional<BookModel> getBook(UUID id) throws Exception{
-        if(bookRepository.findById(id).isEmpty()){
-            throw new Exception("Livro nao existe");
-        }
-        return bookRepository.findById(id);
+    public BookDTO getBook(UUID id) throws Exception{
+
+        BookModel bookModel = bookRepository.findById(id)
+                .orElseThrow(()-> new Exception("Livro nao encontrado"));
+
+        return new BookDTO(
+                bookModel.getNome(),
+                bookModel.getGeneroLivro(),
+                bookModel.getDataPublicacao(),
+                bookModel.getPreco()
+                );
     }
 
     public void deleteBook(UUID id) throws Exception{
